@@ -1,5 +1,5 @@
 # imba-7ui
-
+- repo url https://github.com/me7/imba-7guis
 - original idea https://7guis.github.io/7guis/
 - implement 7guis in imba. result in https://imba-7gui.surge.sh/
 - official imba site have demo in https://imba.io/try/examples/7guis/counter/app.imba
