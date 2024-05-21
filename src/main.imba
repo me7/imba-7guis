@@ -22,26 +22,25 @@ tag temp-convert
 		<input [w:10] bind=f @input=c-from(f)/> " °f"
 
 tag flight-booker
-	flight-type = 'one-way flight'
-	go-date = 0 # = '2014-03-27'
-	return-date # = '2014-05-13'
+	is-return = false
+	start = (new Date).toISOString!.slice(0,10)
+	end = start
 
-	def can-book
-		if new Date(go-date) < new Date()
-			return false
-		if new Date(return-date) < new Date(go-date)
-			return false
-		return true
+	def book-flight
+		msg = "You have booked a {is-return ? 'return ' : 'one-way '} flight on {new Date(start).toDateString!}"
+		if is-return
+			msg += "and return on {new Date(end).toDateString!}"
+		window.alert(msg)
 
 	<self [d:vflex w:30 g:1]>
 		css .err bg:red6
 		<div> "Flight Booker"
-		<select [p:1] bind=flight-type>
-			<option> "one-way flight"
-			<option> "return flight"
-		<input type='date' bind=go-date .err=!can-book()>
-		<input type='date' bind=return-date disabled=(flight-type=='one-way flight')>
-		<button disabled=!can-book()>	"Book"
+		<select [p:1] bind=is-return>
+			<option value=false> "one-way flight"
+			<option value=true> "return flight"
+		<input type='date' bind=start>
+		<input type='date' bind=end disabled=!is-return>
+		<button @click=book-flight disabled=(is-return and start >= end)>	"Book"
 
 tag App
 	<self [d:vflex g:3 ff:sans]>
